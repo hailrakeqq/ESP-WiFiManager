@@ -1,11 +1,15 @@
 #ifndef ESP_WIFIMANAGER_H
 #define ESP_WIFIMANAGER_H
 
+#include "Arduino.h"
 #include "EEPROM.h"
-#define SSID_ADDRESS 0
-#define PASSWORD_ADDRESS 64
+#include <WebServer.h>
 
-#define ESP8266
+#define EEPROM_SIZE 96
+#define SSID_ADDR 0
+#define PASS_ADDR 32
+
+// #define ESP8266
 #ifdef ESP8266
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
@@ -21,18 +25,26 @@ struct WiFiCredential
     String password;
 };
 
-class ESP_WiFiManager
+class WiFiManager
 {
 public:
-    ESP_WiFiManager();
+    WiFiManager(const char *apName = "ESP32_ConfigAP", const char *apPassword = nullptr);
     void begin();
-    void handleClient();
+    bool isConnected();
+    String getSSID();
+    String getPassword();
 
 private:
-    void startAP();
-    bool saveWiFiCredentialsToEEPROM(String ssid, String password);
-    WiFiCredential *getWiFiCredentialsFromEEPROM();
-    WiFiCredential _wifiCred;
+    const char *_apName;
+    const char *_apPassword;
+    WebServer server;
+
+    void startAPMode();
+    void handleRoot();
+    void handleSave();
+    void loadCredentials(String &ssid, String &pass);
+    void saveCredentials(const String &ssid, const String &pass);
+    void connectToWiFi(const String &ssid, const String &pass);
 };
 
 #endif

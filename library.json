@@ -1,0 +1,21 @@
+ {
+  "name": "ESP-WiFiManager",
+  "version": "0.1",
+  "description": "",
+  "keywords": "WiFiManager, WiFi, ESP32, ESP8266, NodeMCU",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/hailrakeqq/ESP-WiFiManager.git"
+  },
+  "authors":
+  [
+    {
+      "name": "Yurij Boklan",
+      "email": "hailrake@riseup.net"
+    }
+  ],
+  "license": "MIT",
+  "frameworks": "*",
+  "platforms": "*"
+}
